@@ -15,3 +15,15 @@ Route::get('/', function()
 {
 	return View::make('hello');
 });
+
+Route::resource('roles', 'RolesController');
+
+Route::resource('cities', 'CitiesController');
+
+Route::resource('companies', 'CompaniesController');
+
+Route::resource('tags', 'TagsController');
+
+Route::resource('offers', 'OffersController');
+
+Route::resource('comments', 'CommentsController');
