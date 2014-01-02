@@ -56,7 +56,7 @@ class LoginController extends BaseController {
 	public function login()
 	{
 		$pass_check = Auth::attempt(array('email' => Input::get('email'), 'password' => Input::get('password')), true);
-		$username_check = Auth::attempt(array('username' => Input::get('email'), 'password' => Input::get('password')), true));
+		$username_check = Auth::attempt(array('username' => Input::get('email'), 'password' => Input::get('password')), true);
 		if ($pass_check || $username_check) {
 			return Redirect::intended('dashboard');
 		}

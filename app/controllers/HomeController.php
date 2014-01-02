@@ -20,4 +20,25 @@ class HomeController extends BaseController {
 		return View::make('hello');
 	}
 
+	public function uploadOfferImage()
+	{
+		$rules = array('file' => 'mimes:jpeg,png');
+
+		$validator = Validator::make(Input::all(), $rules);
+
+		if ($validator->fails()) {
+			return Response::json(array('message' => $validator->messages()->first('file')));
+		}
+
+		$dir = '/images'.date('/Y/m/d/');
+
+		do {
+			$filename = str_random(30).'.jpg';
+		} while (File::exists(public_path().$dir.$filename));
+
+		Input::file('file')->move(public_path().$dir, $filename);
+
+		return Response::json(array('filelink' => $dir.$filename));
+	}
+
 }

@@ -16,14 +16,24 @@
             {{ Form::textarea('description') }}
         </li>
 
+        <?php $cities = array(0 => 'Choose city');
+        foreach (City::get(array('id', 'name')) as $city) {
+            $cities[$city->id] = $city->name;
+        } ?>
+
         <li>
             {{ Form::label('city_id', 'City_id:') }}
-            {{ Form::input('number', 'city_id') }}
+            {{ Form::select('city_id', $cities) }}
         </li>
+
+        <?php $companies = array(0 => 'Choose company');
+        foreach (Company::get(array('id', 'name')) as $company) {
+            $companies[$company->id] = $company->name;
+        } ?>
 
         <li>
             {{ Form::label('company_id', 'Company_id:') }}
-            {{ Form::input('number', 'company_id') }}
+            {{ Form::select('company_id', $companies) }}
         </li>
 
         <li>
@@ -45,6 +55,11 @@
 			{{ Form::submit('Submit', array('class' => 'btn btn-info')) }}
 		</li>
 	</ul>
+    {{ Form::label('file', 'Image:') }}
+    {{ Form::file('file')}}
+    <img src="" id="thumb" style="max-width:300px; max-height: 200px; display: block;">
+    {{ Form::hidden('image') }}
+    <div class="error"></div>
 {{ Form::close() }}
 
 @if ($errors->any())
@@ -53,6 +68,7 @@
 	</ul>
 @endif
 
+@section('scripts')
+@include('offers.scripts')
 @stop
-
 
