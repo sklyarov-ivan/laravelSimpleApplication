@@ -44,6 +44,9 @@ Route::group(array('before' => 'admin.auth'), function()
 
     Route::post('upload', array('uses' => 'HomeController@uploadOfferImage'));
 
+    Route::resource('users', 'UsersController');
+
+
 });
 
 Route::filter('admin.auth', function() 

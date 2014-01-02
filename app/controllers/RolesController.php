@@ -23,6 +23,11 @@ class RolesController extends BaseController {
 	{
 		$roles = $this->role->all();
 
+		if (Request::ajax()) {
+			$roles = Role::where('role', 'like', '%'.Input::get('term', '').'%')->get(array('id', 'role'));
+			return $roles;
+		}
+
 		return View::make('roles.index', compact('roles'));
 	}
 

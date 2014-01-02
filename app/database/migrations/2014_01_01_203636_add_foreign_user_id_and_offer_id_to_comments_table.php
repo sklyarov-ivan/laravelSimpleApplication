@@ -28,11 +28,12 @@ class AddForeignUserIdAndOfferIdToCommentsTable extends Migration {
 	public function down()
 	{
 		Schema::table('comments', function(Blueprint $table) {
-			$table->dropForeign('comments_user_id_foreign');
-			$table->dropForeign('comments_offer_id_foreign');
-			$table->dropIndex('comments_user_id_foreign');
-			$table->dropIndex('comments_offer_id_foreign');
+			// $table->dropForeign('comments_user_id_foreign');
+			// $table->dropForeign('comments_offer_id_foreign');
+			// $table->dropIndex('comments_user_id_foreign');
+			// $table->dropIndex('comments_offer_id_foreign');
 		});
+		// Schema::drop('comments');
 	}
 
 }

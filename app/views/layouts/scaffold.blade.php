@@ -26,6 +26,8 @@
                 <li>{{ link_to_route('comments.index', 'Comments') }}</li>
                 <li>{{ link_to_route('companies.index', 'Companies') }}</li>
                 <li class="pull-right">{{ link_to_route('login.logout', 'Logout') }}</li>
+                <li>{{ link_to_route('users.index', 'Users') }}</li>
+                <li class="pull-right">{{ link_to_route('login.logout', 'Logout') }}</li>
             </ul>
 
             @if (Session::has('message'))
