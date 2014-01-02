@@ -24,7 +24,7 @@ class TagsController extends BaseController {
 		$tags = $this->tag->all();
 
 		if (Request::ajax()) {
-			$tags = Tag::where('name', 'like', '%'.Input::get('term', '').'%')->get(array('name'));
+			$tags = Tag::where('title', 'like', '%'.Input::get('term', '').'%')->get(array('name'));
 			return $tags;
 		}
 

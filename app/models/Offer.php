@@ -47,4 +47,9 @@ class Offer extends Eloquent {
 		return $str;
 	}
 
+	public function usersComments()
+	{
+		return $this->belongsToMany('User', 'comments')->withPivot('body', 'mark')->withTimestamps();
+	}
+
 }
