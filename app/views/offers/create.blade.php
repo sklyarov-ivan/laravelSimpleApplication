@@ -27,8 +27,8 @@
         </li>
 
         <?php $companies = array(0 => 'Choose company');
-        foreach (Company::get(array('id', 'name')) as $company) {
-            $companies[$company->id] = $company->name;
+        foreach (Company::get(array('id', 'title')) as $company) {
+            $companies[$company->id] = $company->title;
         } ?>
 
         <li>
@@ -42,8 +42,11 @@
         </li>
 
         <li>
-            {{ Form::label('image', 'Image:') }}
-            {{ Form::text('image') }}
+            {{ Form::label('file', 'Image:') }}
+            {{ Form::file('file')}}
+            <img src="" id="thumb" style="max-width:300px; max-height: 200px; display: block;">
+            {{ Form::hidden('image') }}
+            <div class="error"></div>
         </li>
 
         <li>
@@ -51,15 +54,15 @@
             {{ Form::text('expires') }}
         </li>
 
+        <li>
+            {{ Form::label('tags', 'Tags:') }}
+            {{ Form::input('text','tags') }}
+        </li>
+
 		<li>
 			{{ Form::submit('Submit', array('class' => 'btn btn-info')) }}
 		</li>
 	</ul>
-    {{ Form::label('file', 'Image:') }}
-    {{ Form::file('file')}}
-    <img src="" id="thumb" style="max-width:300px; max-height: 200px; display: block;">
-    {{ Form::hidden('image') }}
-    <div class="error"></div>
 {{ Form::close() }}
 
 @if ($errors->any())
@@ -68,7 +71,8 @@
 	</ul>
 @endif
 
+@stop
+
 @section('scripts')
 @include('offers.scripts')
 @stop
-

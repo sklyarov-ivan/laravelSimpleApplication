@@ -9,7 +9,7 @@ class LoginController extends BaseController {
 	 */
 	public function index()
 	{
-        return View::make('login.index');
+		return View::make('login.index');
 	}
 
 	/**
@@ -19,7 +19,7 @@ class LoginController extends BaseController {
 	 */
 	public function create()
 	{
-        return View::make('login.register');
+		return View::make('login.register');
 	}
 
 	/**
@@ -30,9 +30,9 @@ class LoginController extends BaseController {
 	public function store()
 	{
 		$rules = array(
-			'email'		=>'required|email|unique:users:email',
+			'email'		=>'required|email|unique:users,email',
 			'password'	=>	'required|alpha_num|between:4,50',
-			'username'	=>	'required|alpha_num|between:2,20|unique:users:username',
+			'username'	=>	'required|alpha_num|between:2,20|unique:users,username',
 		);
 		$validator = Validator::make(Input::all(),$rules);
 		if ($validator->fails()) {
@@ -44,7 +44,7 @@ class LoginController extends BaseController {
 		$user->password = Hash::make(Input::get('password'));
 		$user->save();
 
-		Auth::loginUserId($user->id);
+		Auth::loginUsingId($user->id);
 		return Redirect::home()->with('message','Thank you for registration, now you can comment on offers!');
 	}
 

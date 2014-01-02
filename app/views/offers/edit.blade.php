@@ -4,7 +4,7 @@
 
 <h1>Edit Offer</h1>
 {{ Form::model($offer, array('method' => 'PATCH', 'route' => array('offers.update', $offer->id))) }}
-	<ul>
+    <ul>
         <li>
             {{ Form::label('title', 'Title:') }}
             {{ Form::text('title') }}
@@ -15,14 +15,24 @@
             {{ Form::textarea('description') }}
         </li>
 
+        <?php $cities = array(0 => 'Choose city');
+        foreach (City::get(array('id', 'name')) as $city) {
+            $cities[$city->id] = $city->name;
+        } ?>
+
         <li>
             {{ Form::label('city_id', 'City_id:') }}
-            {{ Form::input('number', 'city_id') }}
+            {{ Form::select('city_id', $cities) }}
         </li>
+
+        <?php $companies = array(0 => 'Choose company');
+        foreach (Company::get(array('id', 'title')) as $company) {
+            $companies[$company->id] = $company->title;
+        } ?>
 
         <li>
             {{ Form::label('company_id', 'Company_id:') }}
-            {{ Form::input('number', 'company_id') }}
+            {{ Form::select('company_id', $companies) }}
         </li>
 
         <li>
@@ -31,8 +41,11 @@
         </li>
 
         <li>
-            {{ Form::label('image', 'Image:') }}
-            {{ Form::text('image') }}
+            {{ Form::label('file', 'Image:') }}
+            {{ Form::file('file')}}
+            <img src="" id="thumb" style="max-width:300px; max-height: 200px; display:block; ">
+            {{ Form::hidden('image') }}
+            <div class="error"></div>
         </li>
 
         <li>
@@ -40,17 +53,26 @@
             {{ Form::text('expires') }}
         </li>
 
-		<li>
-			{{ Form::submit('Update', array('class' => 'btn btn-info')) }}
-			{{ link_to_route('offers.show', 'Cancel', $offer->id, array('class' => 'btn')) }}
-		</li>
-	</ul>
+        <li>
+            {{ Form::label('tags', 'Tags:') }}
+            {{ Form::text('tags', Input::old('tags', implode(', ', array_fetch($offer->tags()->get(array('title'))->toArray(), 'title')))) }}
+        </li>
+
+        <li>
+            {{ Form::submit('Update', array('class' => 'btn btn-info')) }}
+            {{ link_to_route('offers.show', 'Cancel', $offer->id, array('class' => 'btn')) }}
+        </li>
+    </ul>
 {{ Form::close() }}
 
 @if ($errors->any())
-	<ul>
-		{{ implode('', $errors->all('<li class="error">:message</li>')) }}
-	</ul>
+    <ul>
+        {{ implode('', $errors->all('<li class="error">:message</li>')) }}
+    </ul>
 @endif
 
+@stop
+
+@section('scripts')
+@include('offers.scripts')
 @stop

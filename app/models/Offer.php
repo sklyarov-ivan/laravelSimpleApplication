@@ -14,4 +14,37 @@ class Offer extends Eloquent {
 		'expires' => 'required|date'
 	);
 
+	 public function city()
+	{
+		return $this->belongsTo('City');
+	}
+
+	public function company()
+	{
+		return $this->belongsTo('Company');
+	}
+
+	public function tags()
+	{
+		return $this->belongsToMany('Tag');
+	}
+
+	public function webDescription($options = array())
+	{
+		$str = $this->description;
+
+		if (isset($options['shorten'])) {
+			$length = isset($options['length']) ? (int) $options['length'] : 250;
+			$end = isset($options['end']) ? : '…';
+			if (mb_strlen($str) > $length) {
+				$str = mb_substr(trim($str), 0, $length);
+				$str = mb_substr($str, 0, mb_strlen($str) - mb_strpos(strrev($str), ' '));
+				$str = trim($str.$end);
+			}
+		}
+
+		$str = str_replace("\r\n", '<br>', e($str));
+		return $str;
+	}
+
 }

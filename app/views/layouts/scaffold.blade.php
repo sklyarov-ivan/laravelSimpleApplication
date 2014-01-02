@@ -1,4 +1,3 @@
-// app/views/layouts/scaffold.blade.php
 <!doctype html>
 <html>
     <head>
