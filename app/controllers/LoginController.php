@@ -58,7 +58,10 @@ class LoginController extends BaseController {
 		$pass_check = Auth::attempt(array('email' => Input::get('email'), 'password' => Input::get('password')), true);
 		$username_check = Auth::attempt(array('username' => Input::get('email'), 'password' => Input::get('password')), true);
 		if ($pass_check || $username_check) {
-			return Redirect::intended('dashboard');
+			if (!Auth::user()->isRegular()) {
+				return Redirect::to('dashboard');
+			}
+			return Redirect::intended('/');
 		}
 		return Redirect::back()->withInput(Input::except('password'))->with('message', 'Wrong creadentials!');
 	}
